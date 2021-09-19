@@ -19,8 +19,8 @@ import datetime
 headers = {'user-agent':'Mozilla/5.0 Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36'}
 event = 'Phone'
 url = 'https://maker.ifttt.com/trigger/' + event + '/with/key/j9_Kv-Bn2AqIvCZvCRStYi3gvS1kLeDIOJjbwx0KtVe'
-param = {'value1':"Face detected!"}
-requests.get(url, data=param, headers=headers)
+param = {'value1':"Warning, the number of people is more than 3, please keep 1.5m distance of each person!"}
+
 #create two more two sequences to store the name of vip visitor and verfied name 
 vip_names = ['VipVisitor1', 'VipVisitor2','VipVisitor3']
 Verified_name = ['VerifiedVisitor1','VerifiedVisitor2','VerifiedVisitor3']
@@ -84,7 +84,10 @@ while True:
                 visitor_name = customer_names[index]
                 break
         CustomerList.append(visitor_name)
-        
+    
+    # if number of people is more than 3, there is a notification send to the phone
+    if len(CustomerList)>=3:    
+        requests.get(url, data=param, headers=headers)
     # Cycle through the area where the customer's face is
     # Draw a frame, and mark the customer's name on the frame
     # zip([' first customer's position ', 'second customer's position '], [' first customer's name ',' second customer's name '])
@@ -108,3 +111,4 @@ while True:
 # When exiting the program, release the camera or other resources
 video_capture.release()
 cv2.destroyAllWindows()
+
